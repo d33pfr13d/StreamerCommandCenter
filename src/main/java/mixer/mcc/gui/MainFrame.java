@@ -42,7 +42,7 @@ public class MainFrame extends JFrame implements WindowListener {
         super(TITLE_TEXT);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         addWindowListener(this);
-        setPreferredSize(new Dimension(1024, 768));
+        setPreferredSize(new Dimension(600, 200));
         addComponentListener(new ResizeListener(this));
         setContentPane(createContent());
 
@@ -51,12 +51,15 @@ public class MainFrame extends JFrame implements WindowListener {
 
         setMenuBar(createMenuBar());
         // Hilfe anzeigen
-        try {
-            getContentPane().add(new HtmlPanel(new File("help.html").toURI().toURL()), "width 100%, height 100%");
-        } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+//        try {
+//            getContentPane().add(new HtmlPanel(new File("help.html").toURI().toURL()), "width 100%, height 100%");
+//        } catch (MalformedURLException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+        
+        //Lieber gleich das MainPanel anzeigen:
+        getContentPane().add(new MainPanel());
 
         pack();
     }
