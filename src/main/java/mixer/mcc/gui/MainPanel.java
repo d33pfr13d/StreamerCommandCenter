@@ -42,8 +42,8 @@ public class MainPanel extends JPanel {
 		
 		jbLive.setMnemonic(KeyEvent.VK_L);
 		
-		//TODO Wahrscheinlich würde man das konfiguerbar haben wollen, wobei man
-		//überhaupt alle actions konfigurierbar haben will und nicht feste buttons!!!
+		//TODO Wahrscheinlich wÃ¼rde man das konfiguerbar haben wollen, wobei man
+		//Ãœberhaupt alle actions konfigurierbar haben will und nicht feste buttons!!!
 		// -> generisches "Play Video Command" das man dann per properties x-mal spawnen kann
 		// Man braucht auch keinen settings dialog, ne props file finde ich viel komfortabler ^^
 		final JTextArea jtVideo = new JTextArea("D:\\data\\Programme\\Telegram\\media\\on-a-boat-clipped.mp4");
