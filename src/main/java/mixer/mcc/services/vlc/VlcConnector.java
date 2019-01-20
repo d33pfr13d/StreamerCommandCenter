@@ -21,9 +21,9 @@ import jonas.tools.execution.CommandLineUtils;
 public class VlcConnector {
 	
 	/**
-	 * TODO Das soll aus ner properties Datei kommen, wir brauchen dafür ein Konfigurations-Modul.
+	 * TODO Das soll aus ner properties Datei kommen, wir brauchen dafuer ein Konfigurations-Modul.
 	 * 
-	 * TODO FIXEM KOMMT NICHT MIT SPACES KLAR -> MÜSSTE RUNTIME.EXEC in JUT mit array aufrufen!!!
+	 * TODO FIXME KOMMT NICHT MIT SPACES KLAR -> MUESSTE RUNTIME.EXEC in JUT mit array aufrufen!!!
 	 * -> workaorund mit mklink /J VLC <ACTUAL-PATH> nen kurzen pfad erstellen in cmd!!!
 	 */
 	private static String VLC_PATH = "D:\\Programme\\VLC\\";
