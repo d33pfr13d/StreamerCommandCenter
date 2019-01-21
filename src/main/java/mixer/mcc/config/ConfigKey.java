@@ -13,6 +13,11 @@ package mixer.mcc.config;
 public enum ConfigKey {
 	
 	/**
+	 * Soll das UI "Always on top" gezeigt werden?
+	 */
+	UI_PRESENTATION_ON_TOP("ui.presentation.on.top"),
+	
+	/**
 	 * Username on Mixer
 	 */
 	SERVICE_MIXER_USER_NAME("service.mixer.user.name"),

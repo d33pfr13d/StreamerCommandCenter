@@ -58,6 +58,10 @@ public class Configuration {
 		return Integer.parseInt(stringVal);
 	}
 	
+	public boolean getConfigBoolean(ConfigKey key) {
+		return new Boolean(getConfigValue(key));
+	}
+	
 	public String getConfigValue(ConfigKey key) {
 		String theKey = key.getKey();
 		if(secretProps.containsKey(theKey)) {
@@ -107,6 +111,5 @@ public class Configuration {
 		
 		return configuration;
 	}
-	
 
 }

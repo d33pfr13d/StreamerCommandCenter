@@ -17,6 +17,8 @@ import jonas.gui.common.CommandListener;
 import jonas.gui.utils.HtmlPanel;
 import jonas.tools.swing.ResizeListener;
 import mixer.mcc.command.DisplayCreditsCommand;
+import mixer.mcc.config.ConfigKey;
+import mixer.mcc.config.Configuration;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -47,7 +49,8 @@ public class MainFrame extends JFrame implements WindowListener {
         setContentPane(createContent());
 
         // XXX Experimental: Always on top of other windows
-//        setAlwaysOnTop(true);
+        if(Configuration.getConfiguration().getConfigBoolean(ConfigKey.UI_PRESENTATION_ON_TOP))
+        	setAlwaysOnTop(true);
 
         setMenuBar(createMenuBar());
         // Hilfe anzeigen
