@@ -49,8 +49,13 @@ public class Configuration {
 	}
 	
 	public int getConfigInteger(ConfigKey key) {
-		//TODO Fehlermledung falls kein Int!
-		return Integer.parseInt(getConfigValue(key));
+		String stringVal = getConfigValue(key);
+		if(stringVal.length() == 0) {
+			//TODO Fehlermledung falls kein Int!
+			System.out.println("WARNUNG: Kein Wert fuer "+key+" -> gebe 0 zurueck!");
+			return 0;
+		}
+		return Integer.parseInt(stringVal);
 	}
 	
 	public String getConfigValue(ConfigKey key) {

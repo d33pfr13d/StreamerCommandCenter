@@ -7,6 +7,10 @@
 	<version>0.1.0</version>
 	<name>MixerCommandCenter</name>
 	<description>Utilty Application to control stuff around a mixer stream.</description>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
 	<repositories>
 		<repository>
