@@ -3,6 +3,8 @@ package mixer.mcc.services.vlc;
 import java.io.IOException;
 
 import jonas.tools.execution.CommandLineUtils;
+import mixer.mcc.config.ConfigKey;
+import mixer.mcc.config.Configuration;
 
 /**
  * Connects the mcc to your local vlc player.
@@ -20,13 +22,15 @@ import jonas.tools.execution.CommandLineUtils;
  */
 public class VlcConnector {
 	
+	private static Configuration config = Configuration.getConfiguration();
+	
 	/**
 	 * TODO Das soll aus ner properties Datei kommen, wir brauchen dafuer ein Konfigurations-Modul.
 	 * 
 	 * TODO FIXME KOMMT NICHT MIT SPACES KLAR -> MUESSTE RUNTIME.EXEC in JUT mit array aufrufen!!!
 	 * -> workaorund mit mklink /J VLC <ACTUAL-PATH> nen kurzen pfad erstellen in cmd!!!
 	 */
-	private static String VLC_PATH = "D:\\Programme\\VLC\\";
+	private static String VLC_PATH = config.getConfigValue(ConfigKey.SERVICE_VLC_BIN_PATH);
 	
 	private CommandLineUtils cli = new CommandLineUtils();
 	

@@ -4,6 +4,11 @@ import java.awt.Container;
 import java.sql.SQLException;
 
 import javax.persistence.EntityManager;
+import javax.swing.JComponent;
+import javax.swing.plaf.synth.Region;
+import javax.swing.plaf.synth.SynthLookAndFeel;
+import javax.swing.plaf.synth.SynthStyle;
+import javax.swing.plaf.synth.SynthStyleFactory;
 
 import jonas.db.DatabaseManager;
 import jonas.main.AbstractMainClass;
@@ -52,6 +57,18 @@ public class MccMain extends AbstractMainClass<MainFrame> {
 
     @Override
     protected MainFrame createMainFrame() {
+    	// Komponenten groesser machen fuer kleine displays
+    	// -> TODO prop value, ob dies passieren soll
+    	final SynthStyleFactory styleFactory = SynthLookAndFeel.getStyleFactory();
+    	  SynthLookAndFeel.setStyleFactory(new SynthStyleFactory() {
+    	    @Override
+    	    public SynthStyle getStyle(JComponent c, Region id) {
+    	      c.putClientProperty("JComponent.sizeVariant", "large");
+    	      return styleFactory.getStyle(c, id);
+    	    }
+    	  });
+    	
+    	
         return new MainFrame();
     }
 

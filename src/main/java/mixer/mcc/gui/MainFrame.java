@@ -29,7 +29,7 @@ public class MainFrame extends JFrame implements WindowListener {
     /**
      *
      */
-    private static final String TITLE_TEXT = "MCC: Mixer Control Conter";
+    private static final String TITLE_TEXT = "MCC: Mixer Command Center";
 
     /**
      *
@@ -42,7 +42,7 @@ public class MainFrame extends JFrame implements WindowListener {
         super(TITLE_TEXT);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         addWindowListener(this);
-        setPreferredSize(new Dimension(600, 200));
+        setPreferredSize(new Dimension(750, 200));
         addComponentListener(new ResizeListener(this));
         setContentPane(createContent());
 

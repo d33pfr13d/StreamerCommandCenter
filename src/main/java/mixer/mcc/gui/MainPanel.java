@@ -5,19 +5,31 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import mixer.mcc.config.ConfigKey;
+import mixer.mcc.config.Configuration;
+import mixer.mcc.services.mixer.api.MixerInfo;
 import mixer.mcc.services.twitter.TwitterBot;
 import mixer.mcc.services.vlc.VlcConnector;
+import mixer.mcc.timertasks.TimerThread;
+import mixer.mcc.timertasks.ViewerCountUpdaterTask;
 import net.miginfocom.swing.MigLayout;
 
 public class MainPanel extends JPanel {
+	
+	private Configuration config = Configuration.getConfiguration();
 	
 	//TODO Das kommt alles noch in ne controller klasse
 	private TwitterBot twitterBot = new TwitterBot();
 	
 	private VlcConnector vlc = new VlcConnector();
+	
+	private MixerInfo mixerInfo = new MixerInfo();
+	
+	private TimerThread viewerCounterUpdater;
 
 	/**
 	 * 
@@ -27,7 +39,33 @@ public class MainPanel extends JPanel {
 	public MainPanel() {
 		super(new MigLayout());
 		
-		final JTextArea jtLive = new JTextArea("Ich streame JETZT live auf Mixer. Schaut doch mal rein: http://mixer.com/d33pfr13d");
+		/*
+		 * TODO Statt hier direkt alles zu definieren ist folgende Aufteilung geplant:
+		 * - Triggers (wie ALT + L fuer Live Trigger
+		 * - Events ("Live")
+		 * - Actions, die ausgeführt werden, wenn ein Trigger einen Event ausgeloest hat (wie tweete auf twitter)
+		 * - Parameter (wie fixe Texte oder Texte die über ne textarea eingegben werden muessen)
+		 * 
+		 * Das ganze soll dann moeglichst dynamisch (ne xml konfig?) konfigurierbar sein und wird dann nur noch eingelesen und verknuepft.
+		 * Später kann man dann für die konfig auch noch ein gui bauen...
+		 * 
+		 */
+		
+		final JLabel jlViewerCountLabel = new JLabel("Total Viewers: n/a | Current Viewers: n/a");
+		viewerCounterUpdater = new TimerThread("ViewerCounterUpdater", new ViewerCountUpdaterTask(mixerInfo, jlViewerCountLabel), config.getConfigInteger(ConfigKey.SERVICE_MIXER_UPDATE_INTERVAL));
+		final JButton jbPauseViewerCount = new JButton("(P)ausiere update");
+		jbPauseViewerCount.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				viewerCounterUpdater.togglePauseTask();
+				
+			}
+		});
+		jbPauseViewerCount.setMnemonic(KeyEvent.VK_P);
+		
+		
+		final JTextArea jtLive = new JTextArea(config.getConfigValue(ConfigKey.INFO_USER_TWEET_LIVE));
 		JButton jbLive = new JButton("(L)IVE GEHEN");
 		jbLive.addActionListener(new ActionListener() {
 			
@@ -46,7 +84,7 @@ public class MainPanel extends JPanel {
 		//Ueberhaupt alle actions konfigurierbar haben will und nicht feste buttons!!!
 		// -> generisches "Play Video Command" das man dann per properties x-mal spawnen kann
 		// Man braucht auch keinen settings dialog, ne props file finde ich viel komfortabler ^^
-		final JTextArea jtVideo = new JTextArea("D:\\data\\Programme\\Telegram\\media\\on-a-boat-clipped.mp4");
+		final JTextArea jtVideo = new JTextArea(config.getConfigValue(ConfigKey.SERVICE_VLC_VIDEO_DEFAULT));
 		JButton jbBoat = new JButton("ON A (B)OAT");
 		jbBoat.addActionListener(new ActionListener() {
 			
@@ -60,16 +98,29 @@ public class MainPanel extends JPanel {
 		jbBoat.setMnemonic(KeyEvent.VK_B);
 		
 		
+		//Layout
+		add(jlViewerCountLabel);
+		add(jbPauseViewerCount,"wrap");
+		
 		add(jtLive);
 		add(jbLive,"wrap");
 		
 		add(jtVideo);
 		add(jbBoat);
 		
-		
-		
+		// Updates
+		viewerCounterUpdater.startTask();
 		
 	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		//XXX Wird imo beim beenden gar nicht getriggered!!! net schlimm aber...
+		viewerCounterUpdater.destroyTask();
+		super.finalize();
+	}
+	
+	
 	
 	
 	
