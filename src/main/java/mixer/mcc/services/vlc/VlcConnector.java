@@ -32,11 +32,14 @@ public class VlcConnector {
 	 */
 	private static String VLC_PATH = config.getConfigValue(ConfigKey.SERVICE_VLC_BIN_PATH);
 	
+	private static String VLC_WIDTH = config.getConfigValue(ConfigKey.SERVICE_VLC_VIDEO_WIDTH);
+	
 	private CommandLineUtils cli = new CommandLineUtils();
 	
 	public void playVideo(String videoPath) {
 		try {
-			cli.executeCommand("cmd /k "+ VLC_PATH+"vlc.exe --play-and-exit \""+videoPath+"\"");
+		//--width=800
+			cli.executeCommand("cmd /k "+ VLC_PATH+"vlc.exe --play-and-exit --width="+VLC_WIDTH+" \""+videoPath+"\"");
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

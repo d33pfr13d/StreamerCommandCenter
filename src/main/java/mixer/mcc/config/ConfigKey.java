@@ -48,6 +48,8 @@ public enum ConfigKey {
 	 */
 	SERVICE_VLC_VIDEO_DEFAULT("service.vlc.video.default"),
 	
+	/** Breite für die Video Wiedergabe */
+	SERVICE_VLC_VIDEO_WIDTH("service.vlc.video.width"),
 	
 	/**
 	 * Standard Tweet beim live gehen
