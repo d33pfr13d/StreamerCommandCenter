@@ -6,7 +6,7 @@ import streaming.scc.services.vlc.VlcConnector;
 /**
  * Command to play videos in vlc
  */
-public class PlayVideoCommand implements Command, Runnable {
+public class PlayVideoInVlcCommand implements Command, Runnable {
 	
 	private VlcConnector vlc = new VlcConnector();
 	
@@ -14,7 +14,7 @@ public class PlayVideoCommand implements Command, Runnable {
 	
 	
 
-    public PlayVideoCommand(String videoPath) {
+    public PlayVideoInVlcCommand(String videoPath) {
 		super();
 		this.videoPath = videoPath;
 	}

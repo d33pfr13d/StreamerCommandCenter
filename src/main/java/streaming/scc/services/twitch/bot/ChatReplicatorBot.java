@@ -11,10 +11,10 @@ import streaming.scc.config.Configuration;
  * credit where credit is due:
  * https://stackoverflow.com/questions/51484971/java-twitch-irc-bot
  * 
- * @author jonas
+ * @author d33pfr13d
  *
  */
-public class MyBot extends PircBot {
+public class ChatReplicatorBot extends PircBot {
 	
 	private static String mainChannelname;
 
@@ -25,7 +25,7 @@ public class MyBot extends PircBot {
 	//TODO in config file auslagern
 	private static final String[] specialCommands = { "!sge", "!boat"};
 	
-	public MyBot() {
+	public ChatReplicatorBot() {
 //		this.setName("d33pfr13d");
 //		this.setLogin("d33pfr13d");
 	}
@@ -106,7 +106,7 @@ public class MyBot extends PircBot {
 
 	public static void startBot() throws IOException, IrcException, NickAlreadyInUseException {
 		// Now start our bot up.
-		MyBot bot = new MyBot();
+		ChatReplicatorBot bot = new ChatReplicatorBot();
 
 		// Enable debugging output.
 		bot.setVerbose(true);

@@ -95,6 +95,13 @@
 		<artifactId>pircbot</artifactId>
 		<version>1.5.0</version>
 	</dependency>
+	
+	<!-- vlc -->
+	<dependency>
+		<groupId>uk.co.caprica</groupId>
+		<artifactId>vlcj</artifactId>
+		<version>4.1.0</version>
+	</dependency>
 		
 
 		<!-- https://mvnrepository.com/artifact/com.miglayout/miglayout-swing -->

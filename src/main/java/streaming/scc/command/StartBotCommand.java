@@ -8,7 +8,7 @@ import org.jibble.pircbot.IrcException;
 import org.jibble.pircbot.NickAlreadyInUseException;
 
 import jonas.tools.command.Command;
-import streaming.scc.services.twitch.bot.MyBot;
+import streaming.scc.services.twitch.bot.ChatReplicatorBot;
 
 /**
  * Starts up the twitch bot
@@ -18,7 +18,7 @@ public class StartBotCommand implements Command, Runnable {
     @Override
     public void execute() {
     	try {
-			MyBot.startBot();
+			ChatReplicatorBot.startBot();
 		} catch (NickAlreadyInUseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

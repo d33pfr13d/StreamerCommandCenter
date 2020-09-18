@@ -10,7 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import net.miginfocom.swing.MigLayout;
-import streaming.scc.command.PlayVideoCommand;
+import streaming.scc.command.PlayVideoInInternalCommand;
+import streaming.scc.command.PlayVideoInVlcCommand;
 import streaming.scc.config.ConfigKey;
 import streaming.scc.config.Configuration;
 import streaming.scc.services.mixer.api.MixerInfo;
@@ -96,7 +97,8 @@ public class MainPanel extends JPanel {
 				//TODO commands should be executed in a central place
 				//for that we need a "custom" commandListener that would take any command and execute it
 				//(the jut commandlistner can just execute commands with default instantiation (no args)
-				PlayVideoCommand pvc = new PlayVideoCommand(jtVideo.getText());
+//				PlayVideoInVlcCommand pvc = new PlayVideoInVlcCommand(jtVideo.getText());
+				PlayVideoInInternalCommand pvc = new PlayVideoInInternalCommand(jtVideo.getText());
 				pvc.execute();
 			}
 		});
