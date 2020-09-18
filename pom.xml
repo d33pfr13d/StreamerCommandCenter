@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>mixer</groupId>
 	<artifactId>StreamerCommandCenter</artifactId>
-	<version>0.1.1</version>
+	<version>0.2.0</version>
 	<name>StreamerCommandCenter</name>
 	<description>Utilty Application to control stuff around a mixer stream.</description>
 	
