@@ -83,7 +83,7 @@
 		<dependency>
 			<groupId>jonas</groupId>
 			<artifactId>JonasUniversalTools </artifactId>
-			<version>0.16.3</version>
+			<version>0.20.0</version>
 			<scope>system</scope>
 			<systemPath>${basedir}/custom_dependency/JonasUniversalTools-0.20.0.jar</systemPath>
 		</dependency>

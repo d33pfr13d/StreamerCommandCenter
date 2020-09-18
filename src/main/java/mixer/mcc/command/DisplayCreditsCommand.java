@@ -14,7 +14,7 @@ public class DisplayCreditsCommand implements Command, Runnable {
     @Override
     public void execute() {
         // XXX Breaks the gui if alwaysOnTop in the MainFrame is active!!!
-         JOptionPane.showMessageDialog(null, "MCC © 2019 d33pfr13d", "Credits",
+         JOptionPane.showMessageDialog(null, "MCC © 2019-2020 d33pfr13d", "Credits",
          JOptionPane.INFORMATION_MESSAGE);
     }
 

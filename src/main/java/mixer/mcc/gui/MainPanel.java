@@ -29,7 +29,7 @@ public class MainPanel extends JPanel {
 	
 	private MixerInfo mixerInfo = new MixerInfo();
 	
-	private TimerThread viewerCounterUpdater;
+//	private TimerThread viewerCounterUpdater;
 
 	/**
 	 * 
@@ -52,13 +52,15 @@ public class MainPanel extends JPanel {
 		 */
 		
 		final JLabel jlViewerCountLabel = new JLabel("Total Viewers: n/a | Current Viewers: n/a");
-		viewerCounterUpdater = new TimerThread("ViewerCounterUpdater", new ViewerCountUpdaterTask(mixerInfo, jlViewerCountLabel), config.getConfigInteger(ConfigKey.SERVICE_MIXER_UPDATE_INTERVAL));
+		//TODO Kann man von twitch die viewer daten auch irgendwie beziehen?
+//		viewerCounterUpdater = new TimerThread("ViewerCounterUpdater", new ViewerCountUpdaterTask(mixerInfo, jlViewerCountLabel), config.getConfigInteger(ConfigKey.SERVICE_MIXER_UPDATE_INTERVAL));
 		final JButton jbPauseViewerCount = new JButton("(P)ausiere update");
+		jbPauseViewerCount.setEnabled(false);//XXX solange der nix macht
 		jbPauseViewerCount.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				viewerCounterUpdater.togglePauseTask();
+//				viewerCounterUpdater.togglePauseTask();
 				
 			}
 		});
@@ -112,14 +114,14 @@ public class MainPanel extends JPanel {
 		add(jbBoat);
 		
 		// Updates
-		viewerCounterUpdater.startTask();
+//		viewerCounterUpdater.startTask();
 		
 	}
 
 	@Override
 	protected void finalize() throws Throwable {
 		//XXX Wird imo beim beenden gar nicht getriggered!!! net schlimm aber...
-		viewerCounterUpdater.destroyTask();
+//		viewerCounterUpdater.destroyTask();
 		super.finalize();
 	}
 	

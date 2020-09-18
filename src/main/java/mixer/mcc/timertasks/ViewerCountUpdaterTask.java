@@ -10,9 +10,12 @@ import mixer.mcc.services.mixer.api.MixerInfo;
 /**
  * Holt den neusten count von mixer und schreibt ihn ins label
  * 
+ * Deprecated da es mixer nicht mehr gibt...
+ * 
  * @author d33pfr13d
  *
  */
+@Deprecated
 public class ViewerCountUpdaterTask implements Runnable {
 
 	private final MixerInfo mixerInfo;
