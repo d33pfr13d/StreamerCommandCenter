@@ -37,6 +37,8 @@ public class MainFrame extends JFrame implements WindowListener {
      *
      */
     private static final long serialVersionUID = 834544076014120286L;
+    
+    private static MainFrame theMainFrame;
 
     private CommandListener commandListener = new CommandListener("streaming.scc.command.");
 
@@ -66,6 +68,8 @@ public class MainFrame extends JFrame implements WindowListener {
         setPreferredSize(new Dimension(Configuration.getConfiguration().getConfigInteger(ConfigKey.UI_MAIN_FRAME_WIDTH), Configuration.getConfiguration().getConfigInteger(ConfigKey.UI_MAIN_FRAME_HEIGHT)));
         addComponentListener(new ResizeListener(this));
         pack();
+        
+        theMainFrame = this;
     }
 
     private MenuBar createMenuBar() {
@@ -89,8 +93,12 @@ public class MainFrame extends JFrame implements WindowListener {
     private JPanel createContent() {
         return new JPanel(new MigLayout());
     }
+    
+    public static MainFrame getTheMainFrame() {
+		return theMainFrame;
+	}
 
-    @Override
+	@Override
     public void windowClosed(WindowEvent e) {
         // XXX If db: Shutdown operations, e.g. close the database...
 //        DatabaseManager.shutdownHsqldb();

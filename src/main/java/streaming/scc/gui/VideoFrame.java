@@ -26,8 +26,8 @@ public class VideoFrame extends JFrame{
 	private int preferedWidth = Configuration.getConfiguration().getConfigInteger(ConfigKey.UI_VIDEO_FRAME_WIDTH);
 	private int preferedHieght = Configuration.getConfiguration().getConfigInteger(ConfigKey.UI_VIDEO_FRAME_HEIGHT);
 
-	public VideoFrame() {
-		super(hiddenTitle);
+	public VideoFrame(JFrame reference) {
+		super(hiddenTitle, reference!=null?reference.getGraphicsConfiguration():null);
 		setLayout(new MigLayout());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
@@ -64,7 +64,7 @@ public class VideoFrame extends JFrame{
 	//Test
 	public static void main(String[] args) {
 		
-		new VideoFrame().playVideo("C:\\Users\\jonas\\OneDrive\\overlays\\mixitup\\clips_shared\\on-a-boat-clipped.mp4");
+		new VideoFrame(null).playVideo("C:\\Users\\jonas\\OneDrive\\overlays\\mixitup\\clips_shared\\on-a-boat-clipped.mp4");
 	}
 
 }

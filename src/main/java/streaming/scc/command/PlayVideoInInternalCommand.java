@@ -1,6 +1,7 @@
 package streaming.scc.command;
 
 import jonas.tools.command.Command;
+import streaming.scc.gui.MainFrame;
 import streaming.scc.gui.VideoFrame;
 import streaming.scc.services.clips.TimeKeeper;
 
@@ -22,7 +23,7 @@ public class PlayVideoInInternalCommand implements Command, Runnable {
     public void execute() {
 		
 		if(!VideoFrame.getMediaPlayerComponent().mediaPlayer().status().isPlaying()) {
-			VideoFrame videoFrame = new VideoFrame();
+			VideoFrame videoFrame = new VideoFrame(MainFrame.getTheMainFrame());
 			videoFrame.playVideo(videoPath);
 			new TimeKeeper(videoFrame.getMediaPlayerComponent(), videoFrame).start();
 		}
