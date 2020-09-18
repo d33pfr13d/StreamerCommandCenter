@@ -12,7 +12,8 @@ import javax.swing.plaf.synth.SynthStyleFactory;
 
 import jonas.db.DatabaseManager;
 import jonas.main.AbstractMainClass;
-import streamer.scc.gui.MainFrame;
+import streaming.scc.command.StartBotCommand;
+import streaming.scc.gui.MainFrame;
 
 /**
  * Startup/launcher class of the SCC application
@@ -41,6 +42,9 @@ public class SccMain extends AbstractMainClass<MainFrame> {
 
         // XXX Initial was laden?
 //        SwingUtilities.invokeLater(new LoadTodoBoardCommand());
+        
+        //XXX make configurable if we want to start the bot at all
+        (new StartBotCommand()).execute();
     }
 
     /**
