@@ -18,6 +18,7 @@ import streaming.scc.config.Configuration;
 import streaming.scc.services.clips.VideoClip;
 import streaming.scc.services.clips.VideoClips;
 import streaming.scc.services.mixer.api.MixerInfo;
+import streaming.scc.services.twitch.bot.ChatReplicatorBot;
 import streaming.scc.services.twitter.TwitterBot;
 import streaming.scc.timertasks.TimerThread;
 import streaming.scc.timertasks.ViewerCountUpdaterTask;
@@ -98,12 +99,13 @@ public class MainPanel extends JPanel {
 		//Ueberhaupt alle actions konfigurierbar haben will und nicht feste buttons!!!
 		// -> generisches "Play Video Command" das man dann per properties x-mal spawnen kann
 		// Man braucht auch keinen settings dialog, ne props file finde ich viel komfortabler ^^
-		createAndAddClipElements(config.getConfigValue(ConfigKey.SERVICE_VLC_VIDEO_DEFAULT), "Play (C)lip", 'c');
+		createAndAddClipElements(config.getConfigValue(ConfigKey.SERVICE_VLC_VIDEO_DEFAULT), "Play (C)lip", 'c', null);
 		
 		//Auto generated elements for more clips
 		VideoClips clips = VideoClips.createOrLoadVideoClips();
 		for(VideoClip clip : clips.getClips()) {
-			createAndAddClipElements(clip.getVideoFile(), clip.getKeyword(), clip.getMnemonic());
+			createAndAddClipElements(clip.getVideoFile(), clip.getKeyword(), clip.getMnemonic(), clip.getKeyword());
+			ChatReplicatorBot.getBot().addVideoClip(clip);
 		}
 		
 		
@@ -113,7 +115,7 @@ public class MainPanel extends JPanel {
 		
 	}
 
-	private void createAndAddClipElements(String videoFile, String btnTxt, char mnemonic) {
+	private void createAndAddClipElements(String videoFile, String btnTxt, char mnemonic, String keywordToSend) {
 		final JTextArea jtVideo = new JTextArea(videoFile);
 		JButton jbClip = new JButton(btnTxt);
 		jbClip.addActionListener(new ActionListener() {
@@ -127,6 +129,8 @@ public class MainPanel extends JPanel {
 //				PlayVideoInVlcCommand pvc = new PlayVideoInVlcCommand(jtVideo.getText());
 				PlayVideoInInternalCommand pvc = new PlayVideoInInternalCommand(videoFile);
 				pvc.execute();
+				if(keywordToSend != null)
+					ChatReplicatorBot.getBot().sendMessageToSecondary("!"+keywordToSend);
 			}
 		});
 		jbClip.setMnemonic(mnemonic);

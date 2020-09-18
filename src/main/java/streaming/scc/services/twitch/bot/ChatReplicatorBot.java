@@ -1,11 +1,17 @@
 package streaming.scc.services.twitch.bot;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import org.jibble.pircbot.*;
 
+import streaming.scc.command.PlayVideoInInternalCommand;
 import streaming.scc.config.ConfigKey;
 import streaming.scc.config.Configuration;
+import streaming.scc.services.clips.VideoClip;
 
 /**
  * credit where credit is due:
@@ -16,14 +22,15 @@ import streaming.scc.config.Configuration;
  */
 public class ChatReplicatorBot extends PircBot {
 	
+	private static ChatReplicatorBot bot;
+	
 	private static String mainChannelname;
 
 	private static String secondaryChannelname;
 
 	private MessageSplitter ms = new MessageSplitter();
 	
-	//TODO in config file auslagern
-	private static final String[] specialCommands = { "!sge", "!boat"};
+	private static final Map<String, VideoClip> specialCommands = new HashMap<String, VideoClip>();
 	
 	public ChatReplicatorBot() {
 //		this.setName("d33pfr13d");
@@ -64,6 +71,10 @@ public class ChatReplicatorBot extends PircBot {
 		else if(isSpecialCommand(msg)){
 			// replicate command directly, not with name of original typer
 			replicate(channel, msg.getMessage());
+			//trigger command - TODO commands are videoclips right now, might be extended to more...
+			VideoClip clip = specialCommands.get(msg.getMessage());
+			PlayVideoInInternalCommand pvc = new PlayVideoInInternalCommand(clip.getVideoFile());
+			pvc.execute();
 		}
 		else {
 			//Replicator
@@ -75,13 +86,7 @@ public class ChatReplicatorBot extends PircBot {
 	}
 
 	private boolean isSpecialCommand(Message msg) {
-		for(String sc : specialCommands) {
-			if(msg.getMessage().equalsIgnoreCase(sc)) {
-				return true;
-			}
-		}
-		
-		return false;
+		return specialCommands.containsKey(msg.getMessage());
 	}
 
 	private void replicate(String channel, String msgString) {
@@ -97,6 +102,15 @@ public class ChatReplicatorBot extends PircBot {
 			sendMessage(mainChannelname, msgString);
 		}
 	}
+	
+	public void sendMessageToSecondary(String msg) {
+		sendMessage(secondaryChannelname, msg);
+	}
+	
+	
+	public void addVideoClip(VideoClip clip) {
+		specialCommands.put("!"+clip.getKeyword(), clip);
+	}
 
 	public static void main(String[] args) throws Exception {
 
@@ -106,7 +120,7 @@ public class ChatReplicatorBot extends PircBot {
 
 	public static void startBot() throws IOException, IrcException, NickAlreadyInUseException {
 		// Now start our bot up.
-		ChatReplicatorBot bot = new ChatReplicatorBot();
+		getBot();
 
 		// Enable debugging output.
 		bot.setVerbose(true);
@@ -128,6 +142,15 @@ public class ChatReplicatorBot extends PircBot {
 			bot.joinChannel(secondaryChannelname);
 			bot.sendMessage(secondaryChannelname, "bot joined the party ;-)");
 		}
+	}
+	
+	//Singleton
+	public static ChatReplicatorBot getBot() {
+		if(bot == null) {
+			bot = new ChatReplicatorBot();
+		}
+					
+		return bot;
 	}
 
 }
