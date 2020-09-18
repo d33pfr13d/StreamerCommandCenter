@@ -42,11 +42,10 @@ public class MainFrame extends JFrame implements WindowListener {
 
     public MainFrame() {
         super(TITLE_TEXT);
+        setLayout(new MigLayout());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         addWindowListener(this);
-        setPreferredSize(new Dimension(750, 200));
-        addComponentListener(new ResizeListener(this));
-        setContentPane(createContent());
+//        setContentPane(createContent());
 
         // XXX Experimental: Always on top of other windows
         if(Configuration.getConfiguration().getConfigBoolean(ConfigKey.UI_PRESENTATION_ON_TOP))
@@ -62,8 +61,10 @@ public class MainFrame extends JFrame implements WindowListener {
 //        }
         
         //Lieber gleich das MainPanel anzeigen:
-        getContentPane().add(new MainPanel());
+        add(new MainPanel());
 
+        setPreferredSize(new Dimension(Configuration.getConfiguration().getConfigInteger(ConfigKey.UI_MAIN_FRAME_WIDTH), Configuration.getConfiguration().getConfigInteger(ConfigKey.UI_MAIN_FRAME_HEIGHT)));
+        addComponentListener(new ResizeListener(this));
         pack();
     }
 

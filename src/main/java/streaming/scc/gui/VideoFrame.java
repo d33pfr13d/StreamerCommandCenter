@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
+import streaming.scc.config.ConfigKey;
+import streaming.scc.config.Configuration;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 public class VideoFrame extends JFrame{
@@ -22,9 +24,8 @@ public class VideoFrame extends JFrame{
 	public static final EmbeddedMediaPlayerComponent mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
 	
 	//TODO read from config
-	
-	private int preferedWidth = 640;
-	private int preferedHieght = 480;
+	private int preferedWidth = Configuration.getConfiguration().getConfigInteger(ConfigKey.UI_VIDEO_FRAME_WIDTH);
+	private int preferedHieght = Configuration.getConfiguration().getConfigInteger(ConfigKey.UI_VIDEO_FRAME_HEIGHT);
 
 	public VideoFrame() {
 		super(hiddenTitle);

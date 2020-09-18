@@ -18,6 +18,26 @@ public enum ConfigKey {
 	UI_PRESENTATION_ON_TOP("ui.presentation.on.top"),
 	
 	/**
+	 * width of the main frame
+	 */
+	UI_MAIN_FRAME_WIDTH("ui.main.frame.width"),
+	
+	/**
+	 * height of the main frame
+	 */
+	UI_MAIN_FRAME_HEIGHT("ui.main.frame.height"),
+	
+	/**
+	 * width of the video frame
+	 */
+	UI_VIDEO_FRAME_WIDTH("ui.video.frame.width"),
+	
+	/**
+	 * height of the video frame
+	 */
+	UI_VIDEO_FRAME_HEIGHT("ui.video.frame.height"),
+	
+	/**
 	 * Username on Mixer
 	 */
 	SERVICE_MIXER_USER_NAME("service.mixer.user.name"),

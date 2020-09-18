@@ -108,8 +108,6 @@ public class MainPanel extends JPanel {
 			ChatReplicatorBot.getBot().addVideoClip(clip);
 		}
 		
-		
-		
 		// Updates
 //		viewerCounterUpdater.startTask();
 		
