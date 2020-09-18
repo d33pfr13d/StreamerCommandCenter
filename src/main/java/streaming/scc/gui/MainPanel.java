@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,6 +15,8 @@ import streaming.scc.command.PlayVideoInInternalCommand;
 import streaming.scc.command.PlayVideoInVlcCommand;
 import streaming.scc.config.ConfigKey;
 import streaming.scc.config.Configuration;
+import streaming.scc.services.clips.VideoClip;
+import streaming.scc.services.clips.VideoClips;
 import streaming.scc.services.mixer.api.MixerInfo;
 import streaming.scc.services.twitter.TwitterBot;
 import streaming.scc.timertasks.TimerThread;
@@ -83,27 +86,6 @@ public class MainPanel extends JPanel {
 		
 		jbLive.setMnemonic(KeyEvent.VK_L);
 		
-		//TODO Wahrscheinlich wuerde man das konfiguerbar haben wollen, wobei man
-		//Ueberhaupt alle actions konfigurierbar haben will und nicht feste buttons!!!
-		// -> generisches "Play Video Command" das man dann per properties x-mal spawnen kann
-		// Man braucht auch keinen settings dialog, ne props file finde ich viel komfortabler ^^
-		final JTextArea jtVideo = new JTextArea(config.getConfigValue(ConfigKey.SERVICE_VLC_VIDEO_DEFAULT));
-		JButton jbBoat = new JButton("ON A (B)OAT");
-		jbBoat.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				//TODO commands should be executed in a central place
-				//for that we need a "custom" commandListener that would take any command and execute it
-				//(the jut commandlistner can just execute commands with default instantiation (no args)
-//				PlayVideoInVlcCommand pvc = new PlayVideoInVlcCommand(jtVideo.getText());
-				PlayVideoInInternalCommand pvc = new PlayVideoInInternalCommand(jtVideo.getText());
-				pvc.execute();
-			}
-		});
-		jbBoat.setMnemonic(KeyEvent.VK_B);
-		
 		
 		//Layout
 		add(jlViewerCountLabel);
@@ -112,12 +94,44 @@ public class MainPanel extends JPanel {
 		add(jtLive);
 		add(jbLive,"wrap");
 		
-		add(jtVideo);
-		add(jbBoat);
+		//TODO Wahrscheinlich wuerde man das konfiguerbar haben wollen, wobei man
+		//Ueberhaupt alle actions konfigurierbar haben will und nicht feste buttons!!!
+		// -> generisches "Play Video Command" das man dann per properties x-mal spawnen kann
+		// Man braucht auch keinen settings dialog, ne props file finde ich viel komfortabler ^^
+		createAndAddClipElements(config.getConfigValue(ConfigKey.SERVICE_VLC_VIDEO_DEFAULT), "Play (C)lip", 'c');
+		
+		//Auto generated elements for more clips
+		VideoClips clips = VideoClips.createOrLoadVideoClips();
+		for(VideoClip clip : clips.getClips()) {
+			createAndAddClipElements(clip.getVideoFile(), clip.getKeyword(), clip.getMnemonic());
+		}
+		
+		
 		
 		// Updates
 //		viewerCounterUpdater.startTask();
 		
+	}
+
+	private void createAndAddClipElements(String videoFile, String btnTxt, char mnemonic) {
+		final JTextArea jtVideo = new JTextArea(videoFile);
+		JButton jbClip = new JButton(btnTxt);
+		jbClip.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				//TODO commands should be executed in a central place
+				//for that we need a "custom" commandListener that would take any command and execute it
+				//(the jut commandlistner can just execute commands with default instantiation (no args)
+//				PlayVideoInVlcCommand pvc = new PlayVideoInVlcCommand(jtVideo.getText());
+				PlayVideoInInternalCommand pvc = new PlayVideoInInternalCommand(videoFile);
+				pvc.execute();
+			}
+		});
+		jbClip.setMnemonic(mnemonic);
+		add(jtVideo);
+		add(jbClip,"wrap");
 	}
 
 	@Override

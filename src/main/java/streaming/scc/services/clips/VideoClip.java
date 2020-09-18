@@ -13,9 +13,23 @@ public class VideoClip {
 	
 	private String videoFile;
 	
-	private String mnemonic;
+	private char mnemonic;
 	
 	private boolean replicate = true;
+	
+	public VideoClip() {
+		super();
+	}
+	
+	public VideoClip(String keyword, String videoFile, char mnemonic, boolean replicate) {
+		super();
+		this.keyword = keyword;
+		this.videoFile = videoFile;
+		this.mnemonic = mnemonic;
+		this.replicate = replicate;
+	}
+
+
 
 	public String getKeyword() {
 		return keyword;
@@ -33,11 +47,11 @@ public class VideoClip {
 		this.videoFile = videoFile;
 	}
 
-	public String getMnemonic() {
+	public char getMnemonic() {
 		return mnemonic;
 	}
 
-	public void setMnemonic(String mnemonic) {
+	public void setMnemonic(char mnemonic) {
 		this.mnemonic = mnemonic;
 	}
 
@@ -48,6 +62,13 @@ public class VideoClip {
 	public void setReplicate(boolean replicate) {
 		this.replicate = replicate;
 	}
+
+	@Override
+	public String toString() {
+		return "VideoClip [keyword=" + keyword + ", videoFile=" + videoFile + "]";
+	}
+	
+	
 	
 	
 
