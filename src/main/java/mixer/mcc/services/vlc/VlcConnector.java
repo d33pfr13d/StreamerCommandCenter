@@ -39,10 +39,27 @@ public class VlcConnector {
 	public void playVideo(String videoPath) {
 		try {
 		//--width=800
+			//FIXME IT WONT M*****F***ING WORK WITH SPACES IN THE PATH TO VLC
+			// When we put the "" around JUST Program Files it DOES open vlc
+			//but it will not handle the second pair of "" around the f***ing file name
+			// -> IT ALL DOES NOT MATTER BECAUSE WE ARE GOING TO REPLACE THIS SHIT WITH A JVLC VIEW ANYWAYS
+//			VLC_PATH="C:\\\"Program Files\"\\VideoLAN\\VLC\\vlc.exe";
+//			String[] cmdar = {"cmd", "/k", VLC_PATH, "--play-and-exit", "--width="+VLC_WIDTH, "\""+videoPath+"\""};
+//			String cmdar = "cmd /k "+VLC_PATH+" --width="+VLC_WIDTH+" --play-and-exit"+" \""+videoPath+"\"";
+//			cli.executeCommand(cmdar, false, true);
 			cli.executeCommand("cmd /k "+ VLC_PATH+"vlc.exe --play-and-exit --width="+VLC_WIDTH+" \""+videoPath+"\"");
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private String escapeSpaces(String string) {
+		if(string.contains(" ")) {
+			return "\""+string+"\"";
+//			return string.replaceAll(" ", "\" \"");
+		}
+		else
+			return string;
 	}
 	
 	
