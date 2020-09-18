@@ -9,11 +9,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import mixer.mcc.command.PlayVideoCommand;
 import mixer.mcc.config.ConfigKey;
 import mixer.mcc.config.Configuration;
 import mixer.mcc.services.mixer.api.MixerInfo;
 import mixer.mcc.services.twitter.TwitterBot;
-import mixer.mcc.services.vlc.VlcConnector;
 import mixer.mcc.timertasks.TimerThread;
 import mixer.mcc.timertasks.ViewerCountUpdaterTask;
 import net.miginfocom.swing.MigLayout;
@@ -25,7 +25,7 @@ public class MainPanel extends JPanel {
 	//TODO Das kommt alles noch in ne controller klasse
 	private TwitterBot twitterBot = new TwitterBot();
 	
-	private VlcConnector vlc = new VlcConnector();
+	
 	
 	private MixerInfo mixerInfo = new MixerInfo();
 	
@@ -91,8 +91,11 @@ public class MainPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				//TODO usually that would be a command being executed...
-				vlc.playVideo(jtVideo.getText());
+				//TODO commands should be executed in a central place
+				//for that we need a "custom" commandListener that would take any command and execute it
+				//(the jut commandlistner can just execute commands with default instantiation (no args)
+				PlayVideoCommand pvc = new PlayVideoCommand(jtVideo.getText());
+				pvc.execute();
 			}
 		});
 		jbBoat.setMnemonic(KeyEvent.VK_B);
