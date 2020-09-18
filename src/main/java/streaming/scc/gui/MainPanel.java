@@ -125,7 +125,7 @@ public class MainPanel extends JPanel {
 				//for that we need a "custom" commandListener that would take any command and execute it
 				//(the jut commandlistner can just execute commands with default instantiation (no args)
 //				PlayVideoInVlcCommand pvc = new PlayVideoInVlcCommand(jtVideo.getText());
-				PlayVideoInInternalCommand pvc = new PlayVideoInInternalCommand(videoFile);
+				PlayVideoInInternalCommand pvc = new PlayVideoInInternalCommand(jtVideo.getText());
 				pvc.execute();
 				if(keywordToSend != null)
 					ChatReplicatorBot.getBot().sendMessageToSecondary("!"+keywordToSend);
