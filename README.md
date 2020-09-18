@@ -1,17 +1,22 @@
-# MixerCommandCenter
-Utility Application for every day needs of a Mixer Streamer
+# StreamerCommandCenter
+Utility Application for every day needs of a Streamer
 
 ## Features
-Nothing yet, but a lot to come.
+- Go Live Tweet
+- Launch videoclip in vlc
+
+MORE TO COME
 
 ## Build
 Run Maven build on commandline:
 mvn clean package -DskipTests
 
-This creates MixerCommandCenter.jar in dist folder.
+This creates StreamerCommandCenter.jar in dist folder.
 
 ## Run
 Double click on jar or:
-java -jar dist/MixerCommandCenter.jar
+java -jar dist/StreamerCommandCenter.jar
 
 It expects the mcc.properties right next to it or in src/main/resources
+
+You can create mcc.properties.dev and mcc.properties.secret files for custom property values.

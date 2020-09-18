@@ -3,13 +3,13 @@
     Create a runnable Jar file containing all dependencies
   </description>
 
-  <property name="projectName" value="MixerCommandCenter" />
+  <property name="projectName" value="StreamerCommandCenter" />
   <property name="src.dir" location="src/main/java" />
   <property name="build.dir" location="bin" />
   <property name="dist.dir" location="dist" />
   <property name="dist.lib.dir" location="dist/lib" />
   <property name="lib.dir" value="lib" />
-  <property name="main-class" value="mixer.mcc.MccMain" />
+  <property name="main-class" value="streaming.scc.SccMain" />
 	<property name="build.compiler" value="extJavac"/>
 
   <!-- ivy start -->
@@ -39,7 +39,7 @@
 
   <!-- Need classpath to run this -->
   <target name="compile" depends="init" description="compile the source ">
-    <javac encoding="UTF-8" includeantruntime="false" srcdir="${src.dir}" 
+    <javac encoding="UTF-8" includeantruntime="false" srcdir="${src.dir}" target="1.8" source="1.8" 
                        destdir="${build.dir}" classpathref="classpath" />
   </target>
 

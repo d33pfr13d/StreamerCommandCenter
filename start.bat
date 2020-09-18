@@ -1,1 +1,1 @@
-java -jar ./dist/MixerCommandCenter.jar
+java -jar ./dist/StreamerCommandCenter.jar
