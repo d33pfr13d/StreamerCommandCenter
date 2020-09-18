@@ -1,0 +1,16 @@
+<streaming.scc.services.clips.VideoClips>
+  <clips class="linked-list">
+    <streaming.scc.services.clips.VideoClip>
+      <keyword>boat</keyword>
+      <videoFile>C:\file_b.mp4</videoFile>
+      <mnemonic>b</mnemonic>
+      <replicate>true</replicate>
+    </streaming.scc.services.clips.VideoClip>
+    <streaming.scc.services.clips.VideoClip>
+      <keyword>sge</keyword>
+      <videoFile>C:\file_s.mp4</videoFile>
+      <mnemonic>s</mnemonic>
+      <replicate>true</replicate>
+    </streaming.scc.services.clips.VideoClip>
+  </clips>
+</streaming.scc.services.clips.VideoClips>
