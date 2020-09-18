@@ -76,9 +76,14 @@ public class ChatReplicatorBot extends PircBot {
 			
 			
 			//trigger command - TODO commands are videoclips right now, might be extended to more...
-			VideoClip clip = specialCommands.get(msg.getMessage());
-			PlayVideoInInternalCommand pvc = new PlayVideoInInternalCommand(clip.getVideoFile());
-			pvc.execute();
+			if(rightToTriggerCommand(msg.getName())) {
+				VideoClip clip = specialCommands.get(msg.getMessage());
+				PlayVideoInInternalCommand pvc = new PlayVideoInInternalCommand(clip.getVideoFile());
+				pvc.execute();
+			}
+			else {
+				System.out.println("Access to video denied for "+msg.getName());
+			}
 		}
 		else {
 			//Replicator
@@ -87,6 +92,16 @@ public class ChatReplicatorBot extends PircBot {
 			
 			
 		}
+	}
+
+	/**
+	 * For starters we only allow the primary and secondary to trigger videos.
+	 * TODO Is it possible to retrieve a list of mods from twitch and check that here? 
+	 * @param name
+	 * @return
+	 */
+	private boolean rightToTriggerCommand(String name) {
+		return ("#"+name).equalsIgnoreCase(mainChannelname) || ("#"+name).equalsIgnoreCase(secondaryChannelname); 
 	}
 
 	private boolean isSpecialCommand(Message msg) {

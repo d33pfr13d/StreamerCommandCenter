@@ -23,7 +23,6 @@ public class VideoFrame extends JFrame{
 	
 	public static final EmbeddedMediaPlayerComponent mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
 	
-	//TODO read from config
 	private int preferedWidth = Configuration.getConfiguration().getConfigInteger(ConfigKey.UI_VIDEO_FRAME_WIDTH);
 	private int preferedHieght = Configuration.getConfiguration().getConfigInteger(ConfigKey.UI_VIDEO_FRAME_HEIGHT);
 
