@@ -4,6 +4,7 @@ Utility Application for every day needs of a Streamer
 ## Features
 - Go Live Tweet
 - Launch videoclip in vlc
+- Twitch Chat Replication Bot for co-streams 
 
 MORE TO COME
 
