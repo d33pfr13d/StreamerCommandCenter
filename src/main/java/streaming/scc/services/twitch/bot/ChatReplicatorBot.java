@@ -30,6 +30,8 @@ public class ChatReplicatorBot extends PircBot {
 
 	private MessageSplitter ms = new MessageSplitter();
 	
+	private static String replicationMode = Configuration.getConfiguration().getConfigValue(ConfigKey.SERVICE_TWITCH_BOT_REPLICATION_MODE);
+	
 	private static final Map<String, VideoClip> specialCommands = new HashMap<String, VideoClip>();
 	
 	public ChatReplicatorBot() {
@@ -71,6 +73,8 @@ public class ChatReplicatorBot extends PircBot {
 		else if(isSpecialCommand(msg)){
 			// replicate command directly, not with name of original typer
 			replicate(channel, msg.getMessage());
+			
+			
 			//trigger command - TODO commands are videoclips right now, might be extended to more...
 			VideoClip clip = specialCommands.get(msg.getMessage());
 			PlayVideoInInternalCommand pvc = new PlayVideoInInternalCommand(clip.getVideoFile());
@@ -95,10 +99,10 @@ public class ChatReplicatorBot extends PircBot {
 			return;
 		}
 		
-		if(("#"+channel).equalsIgnoreCase(mainChannelname)) {
+		if(("#"+channel).equalsIgnoreCase(mainChannelname) && shouldWriteToSecondary()) {
 			sendMessage(secondaryChannelname, msgString);
 		}
-		else if(("#"+channel).equalsIgnoreCase(secondaryChannelname)) {
+		else if(("#"+channel).equalsIgnoreCase(secondaryChannelname) && shouldReadFromSecondary()) {
 			sendMessage(mainChannelname, msgString);
 		}
 	}
@@ -139,11 +143,20 @@ public class ChatReplicatorBot extends PircBot {
 
 		secondaryChannelname = Configuration.getConfiguration().getConfigValue(ConfigKey.SERVICE_TWITCH_BOT_SECONDARY_CHANNEL);
 		if(!secondaryChannelname.isEmpty()) {
+			//auch wenn nicht replicated wird, muss man immer dem secondary joinen um commands mit zu bekommen ;)
 			bot.joinChannel(secondaryChannelname);
 			bot.sendMessage(secondaryChannelname, "bot joined the party ;-)");
 		}
 	}
 	
+	private static boolean shouldReadFromSecondary() {
+		return replicationMode.equalsIgnoreCase("bidirectional") || replicationMode.equalsIgnoreCase("reading");
+	}
+	
+	private static boolean shouldWriteToSecondary() {
+		return replicationMode.equalsIgnoreCase("bidirectional") || replicationMode.equalsIgnoreCase("writing");
+	}
+
 	//Singleton
 	public static ChatReplicatorBot getBot() {
 		if(bot == null) {

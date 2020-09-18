@@ -53,10 +53,20 @@ public enum ConfigKey {
 	
 	/** Oauth token for the twitch bot */
 	SERVICE_TWITCH_BOT_OAUTH("service.twitch.bot.oauth"),
-	
+
+	/** Name of the primary twitch channel of the broadcaster with leading # */
 	SERVICE_TWITCH_BOT_PRIMARY_CHANNEL("service.twitch.bot.primary.channel"),
 	
+	/** Name of the secondary twitch channel of the broadcasters co-streamer with leading # */
 	SERVICE_TWITCH_BOT_SECONDARY_CHANNEL("service.twitch.bot.secondary.channel"),
+	
+	/** Mode of chat replication:
+	 * off = no replication
+	 * bidirectional = reads from and to secondary channel
+	 * reading = reads from secondary channel and posts to own
+	 * writing = writes own messages to secondary channel
+	 */
+	SERVICE_TWITCH_BOT_REPLICATION_MODE("service.twitch.bot.replication.mode"),
 	
 	/**
 	 * Standard Tweet beim live gehen
