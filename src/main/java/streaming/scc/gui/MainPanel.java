@@ -3,14 +3,19 @@ package streaming.scc.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeListener;
 
+import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import net.miginfocom.swing.MigLayout;
+import streaming.scc.command.CreateBookmarkCommand;
+import streaming.scc.command.CreateQuickBookmarkCommand;
 import streaming.scc.command.PlayVideoInInternalCommand;
 import streaming.scc.command.PlayVideoInVlcCommand;
 import streaming.scc.config.ConfigKey;
@@ -95,25 +100,49 @@ public class MainPanel extends JPanel {
 		add(jtLive);
 		add(jbLive,"wrap");
 		
+		
+		// buttons for bookmarking
+		// - one quick bookmark button with memonic
+		// - one bookmark button that opens a dialog to enter what happened
+		// -> problem with always on top setting, can we temporarily disable that if active?
+		JPanel jpBookmark = new JPanel(new MigLayout());
+		JLabel jlBookmark = new JLabel("Protokolliere unglaubliche Events im Stream: ");
+		jpBookmark.add(jlBookmark);
+		JButton jbBookmark = new JButton(new CreateBookmarkCommand());
+		jbBookmark.setText("bookmark");
+		jbBookmark.setMnemonic('m');
+		jpBookmark.add(jbBookmark);
+		
+		JButton jbQuickBookmark = new JButton(new CreateQuickBookmarkCommand());
+		jbQuickBookmark.setText("Quick bookmark");
+		jbQuickBookmark.setMnemonic('q');
+		
+		add(jpBookmark); //grouped label and first button
+		add(jbQuickBookmark,"wrap"); // quick button seperate
+		
+		
 		//TODO Wahrscheinlich wuerde man das konfiguerbar haben wollen, wobei man
 		//Ueberhaupt alle actions konfigurierbar haben will und nicht feste buttons!!!
 		// -> generisches "Play Video Command" das man dann per properties x-mal spawnen kann
 		// Man braucht auch keinen settings dialog, ne props file finde ich viel komfortabler ^^
-		createAndAddClipElements(config.getConfigValue(ConfigKey.SERVICE_VLC_VIDEO_DEFAULT), "Play (C)lip", 'c', null);
+		JPanel jpClippanel = new JPanel(new MigLayout());
+		JScrollPane jspClippanel = new JScrollPane(jpClippanel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		createAndAddClipElements(config.getConfigValue(ConfigKey.SERVICE_VLC_VIDEO_DEFAULT), "Play (C)lip", 'c', null, jpClippanel);
 		
 		//Auto generated elements for more clips
 		VideoClips clips = VideoClips.createOrLoadVideoClips();
 		for(VideoClip clip : clips.getClips()) {
-			createAndAddClipElements(clip.getVideoFile(), clip.getKeyword(), clip.getMnemonic(), clip.getKeyword());
+			createAndAddClipElements(clip.getVideoFile(), clip.getKeyword(), clip.getMnemonic(), clip.getKeyword(), jpClippanel);
 			ChatReplicatorBot.getBot().addVideoClip(clip);
 		}
+		add(jspClippanel,"width 100%, span");
 		
 		// Updates
 //		viewerCounterUpdater.startTask();
 		
 	}
 
-	private void createAndAddClipElements(String videoFile, String btnTxt, char mnemonic, String keywordToSend) {
+	private void createAndAddClipElements(String videoFile, String btnTxt, char mnemonic, String keywordToSend, JPanel jpClippanel) {
 		final JTextArea jtVideo = new JTextArea(videoFile);
 		JButton jbClip = new JButton(btnTxt);
 		jbClip.addActionListener(new ActionListener() {
@@ -132,8 +161,8 @@ public class MainPanel extends JPanel {
 			}
 		});
 		jbClip.setMnemonic(mnemonic);
-		add(jtVideo);
-		add(jbClip,"wrap");
+		jpClippanel.add(jtVideo);
+		jpClippanel.add(jbClip,"wrap");
 	}
 
 	@Override
