@@ -1,13 +1,15 @@
 package streaming.scc.services.twitch.bot;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import org.jibble.pircbot.*;
 
+import jonas.tools.time.TimeStampOperations;
 import streaming.scc.command.PlayVideoInInternalCommand;
 import streaming.scc.config.ConfigKey;
 import streaming.scc.config.Configuration;
@@ -34,9 +36,16 @@ public class ChatReplicatorBot extends PircBot {
 	
 	private static final Map<String, VideoClip> specialCommands = new HashMap<String, VideoClip>();
 	
+	private BufferedWriter chatLogger;
+	
 	public ChatReplicatorBot() {
 //		this.setName("d33pfr13d");
 //		this.setLogin("d33pfr13d");
+		try {
+			chatLogger = new BufferedWriter(new FileWriter(new File("./logs/twitch_chat_"+TimeStampOperations.formatFilename(System.currentTimeMillis()))));
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	//XXX Wont trigger with twitch
@@ -62,7 +71,16 @@ public class ChatReplicatorBot extends PircBot {
 	}
 
 	private void handleMessage(Message msg) {
-		System.out.println(msg);
+		try {
+			long ts = System.currentTimeMillis();
+			String formattedMsg = TimeStampOperations.formatDate(ts)+" "+TimeStampOperations.formatTime(ts)+" "+msg.toString();
+			System.out.println(formattedMsg);
+			chatLogger.write(formattedMsg);
+			chatLogger.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// Bot commands
 		String channel = msg.getChannel();
@@ -89,8 +107,6 @@ public class ChatReplicatorBot extends PircBot {
 			//Replicator
 			String msgString = msg.toString();
 			replicate(channel, msgString);
-			
-			
 		}
 	}
 
