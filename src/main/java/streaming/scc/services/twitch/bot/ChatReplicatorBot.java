@@ -75,6 +75,7 @@ public class ChatReplicatorBot extends PircBot {
 			long ts = System.currentTimeMillis();
 			String formattedMsg = TimeStampOperations.formatDate(ts)+" "+TimeStampOperations.formatTime(ts)+" "+msg.toString();
 			System.out.println(formattedMsg);
+			chatLogger.newLine();
 			chatLogger.write(formattedMsg);
 			chatLogger.flush();
 		} catch (IOException e) {
