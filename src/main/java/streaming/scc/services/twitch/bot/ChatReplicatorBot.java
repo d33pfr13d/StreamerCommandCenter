@@ -11,6 +11,7 @@ import org.jibble.pircbot.*;
 
 import jonas.tools.time.TimeStampOperations;
 import streaming.scc.command.PlayVideoInInternalCommand;
+import streaming.scc.command.ShoutOutInternalCommand;
 import streaming.scc.config.ConfigKey;
 import streaming.scc.config.Configuration;
 import streaming.scc.services.clips.VideoClip;
@@ -34,7 +35,7 @@ public class ChatReplicatorBot extends PircBot {
 	
 	private static String replicationMode = Configuration.getConfiguration().getConfigValue(ConfigKey.SERVICE_TWITCH_BOT_REPLICATION_MODE);
 	
-	private static final Map<String, VideoClip> specialCommands = new HashMap<String, VideoClip>();
+	private static final Map<String, VideoClip> videoCommands = new HashMap<String, VideoClip>();
 	
 	private BufferedWriter chatLogger;
 	
@@ -89,19 +90,29 @@ public class ChatReplicatorBot extends PircBot {
 			String time = new java.util.Date().toString();
 			sendMessage("#"+channel, "The time is now " + time);
 		}
-		else if(isSpecialCommand(msg)){
+		else if(isVideoCommand(msg)){
 			// replicate command directly, not with name of original typer
 			replicate(channel, msg.getMessage());
 			
 			
 			//trigger command - TODO commands are videoclips right now, might be extended to more...
 			if(rightToTriggerCommand(msg.getName())) {
-				VideoClip clip = specialCommands.get(msg.getMessage());
+				VideoClip clip = videoCommands.get(msg.getMessage());
 				PlayVideoInInternalCommand pvc = new PlayVideoInInternalCommand(clip.getVideoFile());
 				pvc.execute();
 			}
 			else {
 				System.out.println("Access to video denied for "+msg.getName());
+			}
+		}
+		else if(msg.getMessage().startsWith("!so")) {
+			// Shoutout
+			// TODO Introduce proper access control list - for now only the streamer can do it
+			if(("#"+msg.getName()).equalsIgnoreCase(mainChannelname)) {
+				if(msg.getMessage().length()> 3) {
+					String promoteName = msg.getMessage().substring(3).trim();
+					new ShoutOutInternalCommand(promoteName).execute();
+				}
 			}
 		}
 		else {
@@ -121,8 +132,8 @@ public class ChatReplicatorBot extends PircBot {
 		return ("#"+name).equalsIgnoreCase(mainChannelname) || ("#"+name).equalsIgnoreCase(secondaryChannelname); 
 	}
 
-	private boolean isSpecialCommand(Message msg) {
-		return specialCommands.containsKey(msg.getMessage());
+	private boolean isVideoCommand(Message msg) {
+		return videoCommands.containsKey(msg.getMessage());
 	}
 
 	private void replicate(String channel, String msgString) {
@@ -145,7 +156,7 @@ public class ChatReplicatorBot extends PircBot {
 	
 	
 	public void addVideoClip(VideoClip clip) {
-		specialCommands.put("!"+clip.getKeyword(), clip);
+		videoCommands.put("!"+clip.getKeyword(), clip);
 	}
 
 	public static void main(String[] args) throws Exception {

@@ -89,6 +89,16 @@ public enum ConfigKey {
 	SERVICE_TWITCH_BOT_REPLICATION_MODE("service.twitch.bot.replication.mode"),
 	
 	/**
+	 * OAUTH Token to access Twitch API
+	 */
+	SERVICE_TWITCH_API_ACCESS_TOKEN("service.twitch.api.access.token"),
+	
+	/**
+	 * ClientID to access Twitch API
+	 */
+	SERVICE_TWITCH_API_ACCESS_CLIENTID("service.twitch.api.access.clientid"),
+	
+	/**
 	 * Standard Tweet beim live gehen
 	 * (Auch temporaer da das alles dynamischer werden wird)
 	 */

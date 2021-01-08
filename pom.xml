@@ -4,10 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>mixer</groupId>
 	<artifactId>StreamerCommandCenter</artifactId>
-	<version>0.2.0</version>
+	<version>0.2.1</version>
 	<name>StreamerCommandCenter</name>
 	<description>Utilty Application to control stuff around a mixer stream.</description>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -18,7 +18,7 @@
 			<url>https://maven.mixer.com/content/repositories/snapshots/</url>
 		</repository>
 	</repositories>
-	
+
 	<build>
 		<plugins>
 			<plugin>
@@ -89,28 +89,28 @@
 		</dependency>
 
 
-	<!-- https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream -->
-	<dependency>
-	    <groupId>com.thoughtworks.xstream</groupId>
-	    <artifactId>xstream</artifactId>
-	    <version>1.4.11.1</version>
-	</dependency>
+		<!-- https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream -->
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.4.11.1</version>
+		</dependency>
 
 
-	<!-- https://mvnrepository.com/artifact/pircbot/pircbot -->
-	<dependency>
-		<groupId>pircbot</groupId>
-		<artifactId>pircbot</artifactId>
-		<version>1.5.0</version>
-	</dependency>
-	
-	<!-- vlc -->
-	<dependency>
-		<groupId>uk.co.caprica</groupId>
-		<artifactId>vlcj</artifactId>
-		<version>4.1.0</version>
-	</dependency>
-		
+		<!-- https://mvnrepository.com/artifact/pircbot/pircbot -->
+		<dependency>
+			<groupId>pircbot</groupId>
+			<artifactId>pircbot</artifactId>
+			<version>1.5.0</version>
+		</dependency>
+
+		<!-- vlc -->
+		<dependency>
+			<groupId>uk.co.caprica</groupId>
+			<artifactId>vlcj</artifactId>
+			<version>4.1.0</version>
+		</dependency>
+
 
 		<!-- https://mvnrepository.com/artifact/com.miglayout/miglayout-swing -->
 		<dependency>
@@ -126,27 +126,45 @@
 			<version>2.2</version>
 		</dependency>
 
-		<!--  http://twitter4j.org/en/ -->
+		<!-- http://twitter4j.org/en/ -->
 		<dependency>
 			<groupId>org.twitter4j</groupId>
 			<artifactId>twitter4j-core</artifactId>
 			<!-- XXX Don't like the open version, but for now... -->
 			<version>[4.0,)</version>
 		</dependency>
-		
-		<!--  Mixer REST API -->
+
+		<!-- Mixer REST API -->
 		<dependency>
-	    	<groupId>com.mixer</groupId>
+			<groupId>com.mixer</groupId>
 			<artifactId>api</artifactId>
 			<version>6.0.0-SNAPSHOT</version>
-	  	</dependency>
-	  	
-	  	<!-- Google OAuth Client -->
-		<!--dependency>
-			<groupId>com.google.api-client</groupId>
-			<artifactId>google-api-client</artifactId>
-			<version>1.24.1</version>
-		</dependency-->
+		</dependency>
+
+		<!-- Google OAuth Client -->
+		<!--dependency> <groupId>com.google.api-client</groupId> <artifactId>google-api-client</artifactId> 
+			<version>1.24.1</version> </dependency -->
+
+
+		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-client -->
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-client</artifactId>
+			<version>2.30.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.inject</groupId>
+			<artifactId>jersey-hk2</artifactId>
+			<version>2.30.1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+
 
 		<!-- junit -->
 		<dependency>
