@@ -68,9 +68,10 @@ public class TwitchApiCaller {
 				}
 			}
 
-		} catch (IOException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
 			System.err.println("Could not retrieve profile image: "+e.getMessage());
-			throw new RuntimeException(e);
+			return new File("./twitchProfiles/" + userName + ".png");
 		}
 		
 		

@@ -59,9 +59,14 @@ public class ShoutOutFrame extends JFrame{
 			imagePanel.add(new JLabel("<html><span style='font-size:16px'> </span></html>"), "center, wrap");
 			imagePanel.add(new JLabel("<html><span style='font-size:16px'>"+"SHOUT OUT to "+userName+"</span></html>"), "center, wrap");
 			
-			BufferedImage picture = ImageIO.read(imageFile);
-			JLabel picLabel = new JLabel(new ImageIcon(picture));
-			imagePanel.add(picLabel,"wrap");
+			if(imageFile.exists()) {
+				BufferedImage picture = ImageIO.read(imageFile);
+				JLabel picLabel = new JLabel(new ImageIcon(picture));
+				imagePanel.add(picLabel,"wrap");
+			}
+			else {
+				imagePanel.add(new JLabel(""),"wrap");
+			}
 			
 			imagePanel.add(new JLabel("<html><span style='font-size:16px'>"+"Support ist kein Mord ;-)"+"</span></html>"), "center, wrap");
 			

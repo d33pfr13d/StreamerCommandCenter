@@ -71,7 +71,9 @@ public enum ConfigKey {
 	/** Breite für die Video Wiedergabe */
 	SERVICE_VLC_VIDEO_WIDTH("service.vlc.video.width"),
 	
-	/** Oauth token for the twitch bot */
+	/** Oauth token for the twitch bot 
+	 * https://twitchapps.com/tmi/
+	 * */
 	SERVICE_TWITCH_BOT_OAUTH("service.twitch.bot.oauth"),
 
 	/** Name of the primary twitch channel of the broadcaster with leading # */
