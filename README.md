@@ -6,6 +6,7 @@ Utility Application for every day needs of a Streamer
 - Twitch Chat Replication Bot for co-streams
 - Launch videoclip in java window with vlc engine 
 - Trigger video clips in co-stream via chat
+- !so <name> Command to display logo of another Streamer
 
 MORE TO COME
 
