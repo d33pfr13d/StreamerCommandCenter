@@ -171,27 +171,43 @@ public class ChatReplicatorBot extends PircBot {
 
 		// Enable debugging output.
 		bot.setVerbose(true);
+		
+		mainChannelname = Configuration.getConfiguration().getConfigValue(ConfigKey.SERVICE_TWITCH_BOT_PRIMARY_CHANNEL);
+		secondaryChannelname = Configuration.getConfiguration().getConfigValue(ConfigKey.SERVICE_TWITCH_BOT_SECONDARY_CHANNEL);
 
+		bot.connect();
+	}
+
+	private void connect() throws IOException, IrcException, NickAlreadyInUseException {
 		// Connect to the IRC server.
-		bot.connect("irc.chat.twitch.tv", 6667, Configuration.getConfiguration().getConfigValue(ConfigKey.SERVICE_TWITCH_BOT_OAUTH));
+		this.connect("irc.chat.twitch.tv", 6667, Configuration.getConfiguration().getConfigValue(ConfigKey.SERVICE_TWITCH_BOT_OAUTH));
 
 		// Sending special capabilities.
-		bot.sendRawLine("CAP REQ :twitch.tv/membership");
-		bot.sendRawLine("CAP REQ :twitch.tv/commands");
-		bot.sendRawLine("CAP REQ :twitch.tv/tags");
+		this.sendRawLine("CAP REQ :twitch.tv/membership");
+		this.sendRawLine("CAP REQ :twitch.tv/commands");
+		this.sendRawLine("CAP REQ :twitch.tv/tags");
 
-		mainChannelname = Configuration.getConfiguration().getConfigValue(ConfigKey.SERVICE_TWITCH_BOT_PRIMARY_CHANNEL);
-		bot.joinChannel(mainChannelname);
-		bot.sendMessage(mainChannelname, "bot joined the party ;-)");
+		this.joinChannel(mainChannelname);
+		this.sendMessage(mainChannelname, "bot joined the party ;-)");
 
-		secondaryChannelname = Configuration.getConfiguration().getConfigValue(ConfigKey.SERVICE_TWITCH_BOT_SECONDARY_CHANNEL);
 		if(!secondaryChannelname.isEmpty()) {
 			//auch wenn nicht replicated wird, muss man immer dem secondary joinen um commands mit zu bekommen ;)
-			bot.joinChannel(secondaryChannelname);
-			bot.sendMessage(secondaryChannelname, "bot joined the party ;-)");
+			this.joinChannel(secondaryChannelname);
+			this.sendMessage(secondaryChannelname, "bot joined the party ;-)");
 		}
 	}
 	
+	@Override
+	protected void onDisconnect() {
+		super.onDisconnect();
+		try {
+			this.connect();
+		} catch (IOException | IrcException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	private static boolean shouldReadFromSecondary() {
 		return replicationMode.equalsIgnoreCase("bidirectional") || replicationMode.equalsIgnoreCase("reading");
 	}

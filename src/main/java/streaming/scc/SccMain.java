@@ -43,7 +43,7 @@ public class SccMain extends AbstractMainClass<MainFrame> {
         // XXX Initial was laden?
 //        SwingUtilities.invokeLater(new LoadTodoBoardCommand());
         
-        //XXX make configurable if we want to start the bot at all
+        //XXX make configurable whether we want to start the bot at all
         (new StartBotCommand()).execute();
     }
 
