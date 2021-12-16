@@ -15,6 +15,7 @@ public class VideoClip {
 	
 	private char mnemonic;
 	
+	// TODO Idea: Replicate over to the other streamer via chatbot only if true
 	private boolean replicate = true;
 	
 	public VideoClip() {

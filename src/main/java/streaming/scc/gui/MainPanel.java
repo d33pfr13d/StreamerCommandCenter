@@ -156,8 +156,11 @@ public class MainPanel extends JPanel {
 //				PlayVideoInVlcCommand pvc = new PlayVideoInVlcCommand(jtVideo.getText());
 				PlayVideoInInternalCommand pvc = new PlayVideoInInternalCommand(jtVideo.getText());
 				pvc.execute();
-				if(keywordToSend != null)
-					ChatReplicatorBot.getBot().sendMessageToSecondary("!"+keywordToSend);
+				if(keywordToSend != null) {
+					if(ChatReplicatorBot.shouldWriteToSecondary()) {
+						ChatReplicatorBot.getBot().sendMessageToSecondary("!"+keywordToSend);
+					}
+				}
 			}
 		});
 		jbClip.setMnemonic(mnemonic);

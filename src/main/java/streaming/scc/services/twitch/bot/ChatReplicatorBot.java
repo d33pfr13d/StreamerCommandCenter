@@ -193,7 +193,9 @@ public class ChatReplicatorBot extends PircBot {
 		if(!secondaryChannelname.isEmpty()) {
 			//auch wenn nicht replicated wird, muss man immer dem secondary joinen um commands mit zu bekommen ;)
 			this.joinChannel(secondaryChannelname);
-			this.sendMessage(secondaryChannelname, "bot joined the party ;-)");
+			if(shouldWriteToSecondary()) {
+				this.sendMessage(secondaryChannelname, "bot joined the party ;-)");
+			}
 		}
 	}
 	
@@ -212,7 +214,7 @@ public class ChatReplicatorBot extends PircBot {
 		return replicationMode.equalsIgnoreCase("bidirectional") || replicationMode.equalsIgnoreCase("reading");
 	}
 	
-	private static boolean shouldWriteToSecondary() {
+	public static boolean shouldWriteToSecondary() {
 		return replicationMode.equalsIgnoreCase("bidirectional") || replicationMode.equalsIgnoreCase("writing");
 	}
 
