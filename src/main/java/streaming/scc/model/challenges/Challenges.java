@@ -21,6 +21,7 @@ public class Challenges {
 			return new Challenges();
 		} else {
 			try {
+				System.out.println("Loading challenges...");
 				return (Challenges) SerializationUtils.restoreObjectXml(dataFile);
 			} catch (Exception e) {
 				throw new RuntimeException("Could not load challenge data file", e);

@@ -21,6 +21,7 @@ import streaming.scc.command.DisplayChallengesCommand;
 import streaming.scc.command.DisplayCreditsCommand;
 import streaming.scc.config.ConfigKey;
 import streaming.scc.config.Configuration;
+import streaming.scc.gui.challenges.ChallengeTrackerFrame;
 
 /**
  * Starting frame of the Mcc application
@@ -40,6 +41,8 @@ public class MainFrame extends JFrame implements WindowListener {
     private static final long serialVersionUID = 834544076014120286L;
     
     private static MainFrame theMainFrame;
+    
+    private ChallengeTrackerFrame challengeTracker;
 
     private CommandListener commandListener = new CommandListener("streaming.scc.command.");
 
@@ -83,7 +86,7 @@ public class MainFrame extends JFrame implements WindowListener {
     private Menu createToolMenu() {
         Menu menu = new Menu("Utils");
         {
-            MenuItem challengeItem = new MenuItem("Challenges");
+            MenuItem challengeItem = new MenuItem("Show/Reload Challenges");
             challengeItem.setActionCommand(DisplayChallengesCommand.class.getSimpleName());
             challengeItem.addActionListener(this.commandListener);
             menu.add(challengeItem);
@@ -139,5 +142,14 @@ public class MainFrame extends JFrame implements WindowListener {
     @Override
     public void windowDeactivated(WindowEvent e) {
     }
+
+	public ChallengeTrackerFrame getChallengeTracker() {
+		return challengeTracker;
+	}
+
+	public void setChallengeTracker(ChallengeTrackerFrame challengeTracker) {
+		this.challengeTracker = challengeTracker;
+	}
+    
 
 }

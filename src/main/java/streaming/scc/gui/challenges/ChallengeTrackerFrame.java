@@ -82,6 +82,7 @@ public class ChallengeTrackerFrame extends JFrame {
 			challengePannels.add(addChallengePanel(panel, c.getText(), true, c.isChecked()));
 			}
 		}
+		//TODO Nur anzeigen wenn noch min. eine "nicht unlocked" challenge übrig ist
 		challengePannels.add(addChallengePanel(panel, "Extra Challenge alle 10 Subs (max 100)", false, false));
 
 //		panel.setOpaque(false);
@@ -132,6 +133,10 @@ public class ChallengeTrackerFrame extends JFrame {
 		panel.add(jpChallenge, "width 90%, wrap");
 
 		return jpChallenge;
+	}
+	
+	public void reloadContent() {
+		setContentPane(createContent());
 	}
 
 	// Nur zum testen, soll natürlich per Menü aus dem SCC Main heraus geöffnet
