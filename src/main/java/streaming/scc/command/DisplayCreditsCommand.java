@@ -7,8 +7,7 @@ import streaming.scc.gui.MainFrame;
 
 /**
  *
- * @author Capgemini, Jonas Flick
- * @version $Id:$
+ * @author d33pfr13d
  */
 public class DisplayCreditsCommand implements Command, Runnable {
 

@@ -61,9 +61,15 @@ public class SccMain extends AbstractMainClass<MainFrame> {
 
     @Override
     protected MainFrame createMainFrame() {
+    	setupStyle();
+    	
+        return new MainFrame();
+    }
+
+	public static void setupStyle() {
     	// Komponenten groesser machen fuer kleine displays
     	// -> TODO prop value, ob dies passieren soll
-    	final SynthStyleFactory styleFactory = SynthLookAndFeel.getStyleFactory();
+		final SynthStyleFactory styleFactory = SynthLookAndFeel.getStyleFactory();
     	  SynthLookAndFeel.setStyleFactory(new SynthStyleFactory() {
     	    @Override
     	    public SynthStyle getStyle(JComponent c, Region id) {
@@ -71,10 +77,7 @@ public class SccMain extends AbstractMainClass<MainFrame> {
     	      return styleFactory.getStyle(c, id);
     	    }
     	  });
-    	
-    	
-        return new MainFrame();
-    }
+	}
 
     /**
      * Updates what is displayed in the mainFrame, i.e. shows the given panel instead of the current one

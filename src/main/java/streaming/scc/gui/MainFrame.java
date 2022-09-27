@@ -17,6 +17,7 @@ import jonas.gui.common.CommandListener;
 import jonas.gui.utils.HtmlPanel;
 import jonas.tools.swing.ResizeListener;
 import net.miginfocom.swing.MigLayout;
+import streaming.scc.command.DisplayChallengesCommand;
 import streaming.scc.command.DisplayCreditsCommand;
 import streaming.scc.config.ConfigKey;
 import streaming.scc.config.Configuration;
@@ -81,6 +82,12 @@ public class MainFrame extends JFrame implements WindowListener {
 
     private Menu createToolMenu() {
         Menu menu = new Menu("Utils");
+        {
+            MenuItem challengeItem = new MenuItem("Challenges");
+            challengeItem.setActionCommand(DisplayChallengesCommand.class.getSimpleName());
+            challengeItem.addActionListener(this.commandListener);
+            menu.add(challengeItem);
+        }
         {
             MenuItem creditsItem = new MenuItem("Credits");
             creditsItem.setActionCommand(DisplayCreditsCommand.class.getSimpleName());
