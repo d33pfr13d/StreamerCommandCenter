@@ -12,6 +12,7 @@ import javax.swing.plaf.synth.SynthStyleFactory;
 
 import jonas.db.DatabaseManager;
 import jonas.main.AbstractMainClass;
+import streaming.scc.boot.Application;
 import streaming.scc.command.StartBotCommand;
 import streaming.scc.gui.MainFrame;
 
@@ -45,6 +46,9 @@ public class SccMain extends AbstractMainClass<MainFrame> {
         
         //XXX make configurable whether we want to start the bot at all
         (new StartBotCommand()).execute();
+        
+        String[] args2 = {};
+        Application.launch(args2);
     }
 
     /**
