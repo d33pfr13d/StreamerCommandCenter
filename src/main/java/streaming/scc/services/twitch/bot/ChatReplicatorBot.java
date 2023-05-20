@@ -105,7 +105,7 @@ public class ChatReplicatorBot extends PircBot {
 				System.out.println("Access to video denied for "+msg.getName());
 			}
 		}
-		else if(msg.getMessage().startsWith("!so")) {
+		else if(msg.getMessage().startsWith("!so") && !msg.getMessage().startsWith("!soclip")) {
 			// Shoutout
 			// TODO Introduce proper access control list - for now only the streamer can do it
 			if(("#"+msg.getName()).equalsIgnoreCase(mainChannelname)) {

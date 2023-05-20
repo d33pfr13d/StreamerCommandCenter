@@ -60,7 +60,7 @@ public class ChallengeTrackerFrame extends JFrame {
 
 //	        setDefaultLookAndFeelDecorated(true);
 
-		setPreferredSize(new Dimension(650, 650));
+		setPreferredSize(new Dimension(700, 650));
 		addComponentListener(new ResizeListener(this));
 		setBackground(COLOR_CHROMA_GREEN);
 //	        setUndecorated(true);
@@ -76,14 +76,23 @@ public class ChallengeTrackerFrame extends JFrame {
 
 		List<JPanel> challengePannels = new ArrayList<JPanel>();
 
+		int lockedCounter = 0;
 		challenges = Challenges.createOrLoadChallenges();
 		for (Challenge c : challenges.getChallenges()) {
 			if(c.isUnlocked()) {
 			challengePannels.add(addChallengePanel(panel, c.getText(), true, c.isChecked()));
 			}
+			else {
+				lockedCounter++;
+			}
 		}
 		//TODO Nur anzeigen wenn noch min. eine "nicht unlocked" challenge übrig ist
-		challengePannels.add(addChallengePanel(panel, "Extra Challenge alle 10 Subs (max 100)", false, false));
+		if(lockedCounter > 0) {
+			challengePannels.add(addChallengePanel(panel, "Extra Challenge alle 10 Subs (max 100)", false, false));
+		}
+		else {
+			System.out.println("Locked counter: "+lockedCounter);
+		}
 
 //		panel.setOpaque(false);
 
