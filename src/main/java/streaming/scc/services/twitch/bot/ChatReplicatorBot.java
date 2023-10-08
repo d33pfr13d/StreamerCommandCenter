@@ -9,6 +9,9 @@ import java.util.Map;
 
 import org.jibble.pircbot.*;
 
+import com.google.common.base.Strings;
+
+import jonas.tools.data.StringOperations;
 import jonas.tools.time.TimeStampOperations;
 import streaming.scc.command.PlayVideoInInternalCommand;
 import streaming.scc.command.ShoutOutInternalCommand;
@@ -36,6 +39,7 @@ public class ChatReplicatorBot extends PircBot {
 	private static String replicationMode = Configuration.getConfiguration().getConfigValue(ConfigKey.SERVICE_TWITCH_BOT_REPLICATION_MODE);
 	
 	private static final Map<String, VideoClip> videoCommands = new HashMap<String, VideoClip>();
+	private static final Map<String, VideoClip> userAlerts = new HashMap<String, VideoClip>();
 	
 	private BufferedWriter chatLogger;
 	
@@ -43,7 +47,7 @@ public class ChatReplicatorBot extends PircBot {
 //		this.setName("d33pfr13d");
 //		this.setLogin("d33pfr13d");
 		try {
-			chatLogger = new BufferedWriter(new FileWriter(new File("./logs/twitch_chat_"+TimeStampOperations.formatFilename(System.currentTimeMillis()))));
+			chatLogger = new BufferedWriter(new FileWriter(new File("./logs/twitch_chat_"+TimeStampOperations.formatFilename(System.currentTimeMillis())+".log")));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -83,7 +87,7 @@ public class ChatReplicatorBot extends PircBot {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		// Bot commands
 		String channel = msg.getChannel();
 		if(msg.getMessage().equalsIgnoreCase("time")) {
@@ -116,10 +120,24 @@ public class ChatReplicatorBot extends PircBot {
 			}
 		}
 		else {
+			// Alerts
+			doAlerts(msg);
+			
 			//Replicator
 			String msgString = msg.toString();
 			replicate(channel, msgString);
 		}
+	}
+
+	private void doAlerts(Message msg) {
+		
+		String username = msg.getName();
+		
+		if(userAlerts.containsKey(username)) {
+			PlayVideoInInternalCommand pvc = new PlayVideoInInternalCommand(userAlerts.remove(username).getVideoFile());
+			pvc.execute();
+		}
+		
 	}
 
 	/**
@@ -157,6 +175,11 @@ public class ChatReplicatorBot extends PircBot {
 	
 	public void addVideoClip(VideoClip clip) {
 		videoCommands.put("!"+clip.getKeyword(), clip);
+
+		if(!Strings.isNullOrEmpty(clip.getAlertUsername())) {
+			System.out.println("Registered alert for "+clip.getAlertUsername()+" -> !"+clip.getKeyword());
+			userAlerts.put(clip.getAlertUsername(), clip);
+		}
 	}
 
 	public static void main(String[] args) throws Exception {

@@ -14,6 +14,8 @@ public class Challenge {
 	
 	private boolean checked;
 	
+	private boolean grayedout;
+	
 	
 	public Challenge() {
 		super();
@@ -47,11 +49,22 @@ public class Challenge {
 	public void setChecked(boolean checked) {
 		this.checked = checked;
 	}
+	
+
+	public boolean isGrayedout() {
+		return grayedout;
+	}
+
+	public void setGrayedout(boolean grayedout) {
+		this.grayedout = grayedout;
+	}
 
 	@Override
 	public String toString() {
-		return "Challenge [text=" + text + ", unlocked=" + unlocked + ", checked=" + checked + "]";
+		return "Challenge [text=" + text + ", unlocked=" + unlocked + ", checked=" + checked + ", grayedout="
+				+ grayedout + "]";
 	}
 
+	
 
 }

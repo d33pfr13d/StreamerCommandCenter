@@ -18,6 +18,8 @@ public class VideoClip {
 	// TODO Idea: Replicate over to the other streamer via chatbot only if true
 	private boolean replicate = true;
 	
+	private String alertUsername;
+	
 	public VideoClip() {
 		super();
 	}
@@ -62,6 +64,14 @@ public class VideoClip {
 
 	public void setReplicate(boolean replicate) {
 		this.replicate = replicate;
+	}
+	
+	public String getAlertUsername() {
+		return alertUsername;
+	}
+
+	public void setAlertUsername(String alertUsername) {
+		this.alertUsername = alertUsername;
 	}
 
 	@Override

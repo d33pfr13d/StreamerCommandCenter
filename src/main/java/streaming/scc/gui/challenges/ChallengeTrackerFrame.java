@@ -80,15 +80,18 @@ public class ChallengeTrackerFrame extends JFrame {
 		challenges = Challenges.createOrLoadChallenges();
 		for (Challenge c : challenges.getChallenges()) {
 			if(c.isUnlocked()) {
-			challengePannels.add(addChallengePanel(panel, c.getText(), true, c.isChecked()));
+				challengePannels.add(addChallengePanel(panel, c.getText(), true, c.isChecked(), false));
+			}
+			else if(c.isGrayedout()) {
+				challengePannels.add(addChallengePanel(panel, c.getText(), false, c.isChecked(), true));
 			}
 			else {
 				lockedCounter++;
 			}
 		}
-		//TODO Nur anzeigen wenn noch min. eine "nicht unlocked" challenge übrig ist
+		//TODO Nur anzeigen wenn noch min. eine "nicht unlocked" challenge übrig ist - text konfigurierbar machen
 		if(lockedCounter > 0) {
-			challengePannels.add(addChallengePanel(panel, "Extra Challenge alle 10 Subs (max 100)", false, false));
+			challengePannels.add(addChallengePanel(panel, "Extra Challenge alle 5 Subs (max 6 Challenges)", false, false, false));
 		}
 		else {
 			System.out.println("Locked counter: "+lockedCounter);
@@ -99,7 +102,7 @@ public class ChallengeTrackerFrame extends JFrame {
 		return panel;
 	}
 
-	public JPanel addChallengePanel(JPanel panel, String challengeTxt, boolean mitCheckmark, boolean isChecked) {
+	public JPanel addChallengePanel(JPanel panel, String challengeTxt, boolean mitCheckmark, boolean isChecked, boolean grayedout) {
 //		JPanel jpChallenge = new RoundedPanel(new MigLayout("debug"));
 		JPanel jpChallenge = new RoundedPanel(new MigLayout(""));
 
@@ -129,8 +132,14 @@ public class ChallengeTrackerFrame extends JFrame {
 		}
 
 		JLabel jlChallenge = new JLabel(challengeTxt);
-		jlChallenge.setForeground(COLOR_RED);
-		jlChallenge.setBackground(COLOR_RED);
+		if(grayedout) {
+			jlChallenge.setForeground(Color.DARK_GRAY);
+			jlChallenge.setBackground(Color.DARK_GRAY);
+		}
+		else {
+			jlChallenge.setForeground(COLOR_RED);
+			jlChallenge.setBackground(COLOR_RED);
+		}
 		int sz = mitCheckmark ? 28 : 32;
 		Font challengeFont = new Font("Arial", Font.PLAIN, sz);
 		jlChallenge.setFont(challengeFont);
